@@ -1,0 +1,5 @@
+recipes {
+    name: String,
+    ingredients: [String]
+    quantity: [String]
+}
