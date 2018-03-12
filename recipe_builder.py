@@ -32,11 +32,11 @@ def get_recipe(name=None):
 
 @app.route('/recipe/ingredients/<name>', methods=['GET'])  # get Recipe from ingredient
 def get_recipe_from_ingredients(name=None):
+	name = name.split(',')
 	recipes = mongo.db.recipes
 	output = []
-	for recipe in recipes.find({'ingredients' : name}):
+	for recipe in recipes.find({'ingredients': {'$all': name}}):
 		output.append({'name': recipe['name'], 'ingredients': recipe['ingredients'], 'quantity': recipe['quantity']})
-
 	return jsonify({'result': output})
 
 
