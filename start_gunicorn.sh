@@ -1,0 +1,1 @@
+gunicorn recipe_builder:app -b localhost:8080 &
