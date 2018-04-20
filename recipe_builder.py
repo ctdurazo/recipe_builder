@@ -14,7 +14,7 @@ def get_recipe_list():
 	recipes = mongo.db.recipes
 	output = []
 	for recipe in recipes.find():
-		output.append({'name': recipe['name'], 'ingredients': recipe['ingredients'], 'quantity': recipe['quantity']})
+	    output = {'name': recipe['name'], 'category': recipe['category'], 'image': recipe[image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']}
 
 	return jsonify({'result': output})
 
@@ -24,7 +24,7 @@ def get_recipe(name=None):
 	recipes = mongo.db.recipes
 	recipe = recipes.find_one({'name' : name.lower()})
 	if recipe:
-		output = {'name': recipe['name'], 'ingredients': recipe['ingredients'], 'quantity': recipe['quantity']}
+	    output = {'name': recipe['name'], 'category': recipe['category'], 'image': recipe[image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']}
 	else:
 		output = "Not found"
 	return jsonify({'result': output})
@@ -36,7 +36,7 @@ def get_recipe_from_ingredients(name=None):
 	recipes = mongo.db.recipes
 	output = []
 	for recipe in recipes.find({'ingredients': {'$all': name}}):
-		output.append({'name': recipe['name'], 'ingredients': recipe['ingredients'], 'quantity': recipe['quantity']})
+	    output = {'name': recipe['name'], 'category': recipe['category'], 'image': recipe[image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']}
 
 	return jsonify({'result': output})
 
@@ -48,10 +48,10 @@ def get_recipes_from_ingredients(name=None):
 	output = []
 	for name in names:
 		for recipe in recipes.find({'ingredients': name}):
-			if output.__contains__({'name': recipe['name'], 'ingredients': recipe['ingredients'], 'quantity': recipe['quantity']}):
+			if output.__contains__({'name': recipe['name'], 'category': recipe['category'], 'image': recipe[image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']}):
 				continue
 			else :
-				output.append({'name': recipe['name'], 'ingredients': recipe['ingredients'], 'quantity': recipe['quantity']})
+	    output = {'name': recipe['name'], 'category': recipe['category'], 'image': recipe[image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']}
 
 	return jsonify({'result': output})
 
@@ -64,7 +64,7 @@ def get_recipes_from_ingredients_and_quantity(name=None, qty=None):
 	output = []
 	for i in range(0,len(names)):
 		for recipe in recipes.find({'ingredients': names[i], 'quantity': qtys[i]}):
-			if output.__contains__({'name': recipe['name'], 'ingredients': recipe['ingredients'], 'quantity': recipe['quantity']}):
+			if output.__contains__({'name': recipe['name'], 'category': recipe['category'], 'image': recipe[image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']}):
 				continue
 			else :
 				output.append({'name': recipe['name'], 'ingredients': recipe['ingredients'], 'quantity': recipe['quantity']})
