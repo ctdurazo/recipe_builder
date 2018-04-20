@@ -1,5 +1,10 @@
 recipes {
     name: String,
-    ingredients: [String]
-    quantity: [String]
+    category: String,
+    image: String,
+    ingredients: [{
+        ingredient: String
+        quantity: String
+    }],
+    rating: String
 }
