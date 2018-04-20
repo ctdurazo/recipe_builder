@@ -14,7 +14,7 @@ def get_recipe_list():
 	recipes = mongo.db.recipes
 	output = []
 	for recipe in recipes.find():
-	    output = {'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']}
+		output.append({'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']})
 	return jsonify({'result': output})
 
 
@@ -35,7 +35,7 @@ def get_recipe_from_ingredients(name=None):
 	recipes = mongo.db.recipes
 	output = []
 	for recipe in recipes.find({'ingredients': {'$all': name}}):
-	    output = {'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']}
+		output.append({'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']})
 	return jsonify({'result': output})
 
 
