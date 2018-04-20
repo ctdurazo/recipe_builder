@@ -23,7 +23,7 @@ def get_recipe(name=None):
 	recipes = mongo.db.recipes
 	recipe = recipes.find_one({'name' : name.lower()})
 	if recipe:
-	    output = {'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']}
+        output = {'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']}
 	else:
 		output = "Not found"
 	return jsonify({'result': output})
