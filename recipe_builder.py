@@ -77,8 +77,7 @@ def add_recipe():
 	recipes = mongo.db.recipes
 	name = request.json['name'].lower()
 	ingredients = request.json['ingredients'].lower()
-	quantity = request.json['quantity'].lower()
-	recipe_id = recipes.insert({'name': name, 'ingredients': ingredients, 'quantity': quantity})
+	recipe_id = recipes.insert({'name': name, 'ingredients': ingredients})
 	new_recipe = recipes.find_one({'_id': recipe_id})
 	output = {'name': new_recipe['name'], 'ingredients': new_recipe['ingredients'], 'quantity': new_recipe['quantity']}
 	return jsonify({'result': output})
