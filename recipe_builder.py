@@ -76,10 +76,13 @@ def get_recipes_from_ingredients_and_quantity(name=None, qty=None):
 def add_recipe():
 	recipes = mongo.db.recipes
 	name = request.json['name'].lower()
+	category = request.json['category'].lower()
+	image = request.json['image'].lower()
 	ingredients = request.json['ingredients'].lower()
-	recipe_id = recipes.insert({'name': name, 'ingredients': ingredients})
+	rating = request.json['rating'].lower()
+	recipe_id = recipes.insert({'name': name, 'category': category, 'image': image, 'ingredients': ingredients, 'rating': rating})
 	new_recipe = recipes.find_one({'_id': recipe_id})
-	output = {'name': new_recipe['name'], 'ingredients': new_recipe['ingredients'], 'quantity': new_recipe['quantity']}
+	output = {'name': new_recipe['name'], 'category': new_recipe['category'], 'image': new_recipe[image'], 'ingredients': new_recipe['ingredients'], 'rating': new_recipe['rating']}
 	return jsonify({'result': output})
 
 
