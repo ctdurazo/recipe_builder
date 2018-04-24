@@ -9,7 +9,7 @@ app.config['MONGO_URI'] = 'mongodb://localhost:27017/recipedb'
 mongo = PyMongo(app)
 
 
-@app.route('/recipes', methods=['GET'])  # get all Recipes
+@app.route('/getRecipes', methods=['GET'])  # get all Recipes
 def get_recipe_list():
 	recipes = mongo.db.recipes
 	output = []
@@ -18,7 +18,7 @@ def get_recipe_list():
 	return jsonify({'result': output})
 
 
-@app.route('/recipe/<name>', methods=['GET'])  # get Recipe by name
+@app.route('/getRecipeByName/<name>', methods=['GET'])  # get Recipe by name
 def get_recipe(name=None):
 	recipes = mongo.db.recipes
 	recipe = recipes.find_one({'name' : name.lower()})
@@ -29,46 +29,27 @@ def get_recipe(name=None):
 	return jsonify({'result': output})
 
 
-@app.route('/recipe/ingredients/<name>', methods=['GET'])  # get all recipes with all ingredients
-def get_recipe_from_ingredients(name=None):
-	name = name.lower().split(',')
+@app.route('/getRecipesByCategory/<category>', methods=['GET'])  # get all recipes by category
+def get_recipes_by_category(category=None):
+	category = category.lower()
 	recipes = mongo.db.recipes
 	output = []
-	for recipe in recipes.find({'ingredients': {'$all': name}}):
+	for recipe in recipes.find({'category': {'$all': category}}):
 		output.append({'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']})
 	return jsonify({'result': output})
 
 
-@app.route('/recipes/ingredients/<name>', methods=['GET'])  # get list of Recipes containing at least 1 ingredient
-def get_recipes_from_ingredients(name=None):
-	names = name.lower().split(',')
+@app.route('/getRecipesByRating/<rating>', methods=['GET'])  # get all recipes by rating
+def get_recipes_by_rating(rating=None):
+	rating = rating.lower()
 	recipes = mongo.db.recipes
 	output = []
-	for name in names:
-		for recipe in recipes.find({'ingredients': name}):
-			if output.__contains__({'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']}):
-				continue
-			else :
-				output.append({'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']})
+	for recipe in recipes.find({'rating': {'$all': rating}}):
+		output.append({'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']})
 	return jsonify({'result': output})
+	
 
-
-@app.route('/recipes/ingredients/<name>/<qty>', methods=['GET'])  # get list of Recipes containing at least 1 ingredient
-def get_recipes_from_ingredients_and_quantity(name=None, qty=None):
-	names = name.lower().split(',')
-	qtys = qty.lower().split(',')
-	recipes = mongo.db.recipes
-	output = []
-	for i in range(0,len(names)):
-		for recipe in recipes.find({'ingredients': names[i], 'quantity': qtys[i]}):
-			if output.__contains__({'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']}):
-				continue
-			else :
-				output.append({'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']})
-	return jsonify({'result': output})
-
-
-@app.route('/recipe', methods=['Post'])  # add new recipe
+@app.route('/addRecipe', methods=['Post'])  # add new recipe
 def add_recipe():
 	recipes = mongo.db.recipes
 	name = request.json['name'].lower()
