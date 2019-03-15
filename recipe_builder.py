@@ -14,7 +14,7 @@ def get_recipe_list():
 	recipes = mongo.db.recipes
 	output = []
 	for recipe in recipes.find():
-	    output.append({'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']})
+		output.append({'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']})
 	return jsonify({'result': output})
 
 
@@ -23,9 +23,9 @@ def get_recipe(name=None):
 	recipes = mongo.db.recipes
 	recipe = recipes.find_one({'name' : name.lower()})
 	if recipe:
-	    output = {'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']}
+		output = {'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']}
 	else:
-	    output = "Not found"
+		output = "Not found"
 	return jsonify({'result': output})
 
 
@@ -35,7 +35,7 @@ def get_recipes_by_category(category=None):
 	recipes = mongo.db.recipes
 	output = []
 	for recipe in recipes.find({'category': {'$all': category}}):
-	    output.append({'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']})
+		output.append({'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']})
 	return jsonify({'result': output})
 
 
@@ -45,7 +45,7 @@ def get_recipes_by_rating(rating=None):
 	recipes = mongo.db.recipes
 	output = []
 	for recipe in recipes.find({'rating': {'$all': rating}}):
-	    output.append({'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']})
+		output.append({'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']})
 	return jsonify({'result': output})
 	
 
