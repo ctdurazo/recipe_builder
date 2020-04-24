@@ -15,7 +15,7 @@ def get_recipe_list():
 	output = []
 	for recipe in recipes.find():
 		output.append({'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']})
-	return jsonify({'result': output})
+	return jsonify(output)
 
 
 @app.route('/getRecipeByName/<name>', methods=['GET'])  # get Recipe by name
@@ -26,7 +26,7 @@ def get_recipe(name=None):
 		output = {'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']}
 	else:
 		output = "Not found"
-	return jsonify({'result': output})
+	return jsonify(output)
 
 
 @app.route('/getRecipesByCategory/<category>', methods=['GET'])  # get all recipes by category
@@ -36,7 +36,7 @@ def get_recipes_by_category(category=None):
 	output = []
 	for recipe in recipes.find({'category': {'$all': category}}):
 		output.append({'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']})
-	return jsonify({'result': output})
+	return jsonify(output)
 
 
 @app.route('/getRecipesByRating/<rating>', methods=['GET'])  # get all recipes by rating
@@ -46,7 +46,7 @@ def get_recipes_by_rating(rating=None):
 	output = []
 	for recipe in recipes.find({'rating': {'$all': rating}}):
 		output.append({'name': recipe['name'], 'category': recipe['category'], 'image': recipe['image'], 'ingredients': recipe['ingredients'], 'rating': recipe['rating']})
-	return jsonify({'result': output})
+	return jsonify(output)
 	
 
 @app.route('/addRecipe', methods=['Post'])  # add new recipe
@@ -60,7 +60,7 @@ def add_recipe():
 	recipe_id = recipes.insert({'name': name, 'category': category, 'image': image, 'ingredients': ingredients, 'rating': rating})
 	new_recipe = recipes.find_one({'_id': recipe_id})
 	output = {'name': new_recipe['name'], 'category': new_recipe['category'], 'image': new_recipe['image'], 'ingredients': new_recipe['ingredients'], 'rating': new_recipe['rating']}
-	return jsonify({'result': output})
+	return jsonify(output)
 
 
 if __name__ == '__main__':
