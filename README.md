@@ -1,1 +1,1 @@
-Web-app version of Recipe Builder app
+API for Recipe Builder app
